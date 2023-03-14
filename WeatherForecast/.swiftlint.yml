@@ -1,10 +1,12 @@
+disabled_rules:
+- trailing_whitespace
+
 excluded:
-- WeatherForecast/AppDelegate.swift
-- WeatherForecast/SceneDelegate.swift
+- WeatherForecast/Core/Sources/Application/AppDelegate.swift
+- WeatherForecast/Core/Sources/Application/SceneDelegate.swift
 - WeatherForecastUITests
 - WeatherForecastTests
 
 identifier_name:
   excluded:
-    - dt
     - id
