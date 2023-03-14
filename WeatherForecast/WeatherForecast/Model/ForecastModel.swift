@@ -1,5 +1,5 @@
 //
-//  FiveDayWeather.swift
+//  ForecastModel.swift
 //  WeatherForecast
 //
 //  Created by Bora Yang on 2023/03/14.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: - FiveDayWeather
-struct FiveDayWeather: Codable {
+// MARK: - ForecastModel
+struct ForecastModel: Codable {
     let cod: String
     let message, cnt: Int
     let list: [List]
@@ -31,8 +31,8 @@ struct List: Codable {
     let weather: [Weather]
     let clouds: Clouds
     let wind: Wind
-    let rain: FiveDayRain?
-    let sys: FiveDaySys
+    let rain: ForecastRain?
+    let sys: ForecastSys
 
     enum CodingKeys: String, CodingKey {
         case dt, main, weather, clouds, wind, visibility, pop, rain, sys
@@ -40,8 +40,8 @@ struct List: Codable {
     }
 }
 
-// MARK: - FiveDayRain
-struct FiveDayRain: Codable {
+// MARK: - ForecastRain
+struct ForecastRain: Codable {
     let the3H: Double
 
     enum CodingKeys: String, CodingKey {
@@ -49,7 +49,7 @@ struct FiveDayRain: Codable {
     }
 }
 
-// MARK: - FiveDaySys
-struct FiveDaySys: Codable {
+// MARK: - ForecastSys
+struct ForecastSys: Codable {
     let pod: String
 }

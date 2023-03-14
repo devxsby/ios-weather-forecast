@@ -1,5 +1,5 @@
 //
-//  CurrentWeather.swift
+//  WeatherModel.swift
 //  WeatherForecast
 //
 //  Created by Bora Yang on 2023/03/14.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: - CurrentWeather
-struct CurrentWeather: Codable {
+// MARK: - WeatherModel
+struct WeatherModel: Codable {
     let visibility, dt, timezone, id, cod: Int
     let base, name: String
     let coord: Coord
