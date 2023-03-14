@@ -176,7 +176,6 @@
 				8E7477AE29C0E54A00D6E202 /* API */,
 				8E7477AC29C0E52D00D6E202 /* Service */,
 				8E7477AD29C0E53500D6E202 /* Foundation */,
-				8E7477C629C0E84200D6E202 /* Config.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -247,6 +246,7 @@
 				8E7477CE29C0E9B600D6E202 /* APIResponse.swift */,
 				8E7477D029C0E9C500D6E202 /* APIError.swift */,
 				8E7477C229C0E7C300D6E202 /* APIService.swift */,
+				8E7477C629C0E84200D6E202 /* Config.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
