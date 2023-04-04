@@ -11,6 +11,11 @@ final class WeaterHeaderView: UICollectionReusableView {
 
     static let identifier = "WeaterHeaderView"
 
+//    var weatherImage: UIImage!
+//    var locationLabel: UILabel!
+//    var subTemperatureLabel: UILabel!
+//    var currentTmperatureLabel: UILabel!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .yellow
