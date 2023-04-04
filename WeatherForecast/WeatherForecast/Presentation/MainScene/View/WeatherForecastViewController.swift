@@ -11,6 +11,7 @@ final class WeatherForecastViewController: UIViewController {
     // MARK: - Properties
     
     var viewModel: WeatherForecastViewModel!
+    
     var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -61,7 +62,7 @@ extension WeatherForecastViewController {
     }
 
     private func registerCollectionViewCell() {
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "ForecastCollectionViewCell")
+        collectionView.register(ForecastCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "ForecastCollectionViewCell")
     }
 }
 
@@ -69,21 +70,22 @@ extension WeatherForecastViewController {
     private func configureCollectionView() {
         self.view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
 
     }
 }
 
 extension WeatherForecastViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 30
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ForecastCollectionViewCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ForecastCollectionViewCell.identifier, for: indexPath)
+                as? ForecastCollectionViewCell else { return UICollectionViewCell() }
         return cell
     }
 
