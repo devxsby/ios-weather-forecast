@@ -16,6 +16,7 @@ final class WeatherForecastViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setBackgroundColor()
         binding()
     }
 }
@@ -23,6 +24,10 @@ final class WeatherForecastViewController: UIViewController {
 // MARK: - Methods
 
 extension WeatherForecastViewController {
+    
+    private func setBackgroundColor() {
+        view.backgroundColor = .white
+    }
     
     private func binding() {
 
