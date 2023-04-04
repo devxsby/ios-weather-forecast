@@ -62,7 +62,9 @@ extension WeatherForecastViewController {
     }
 
     private func registerCollectionViewCell() {
-        collectionView.register(ForecastCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "ForecastCollectionViewCell")
+        collectionView.register(WeaterHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeaterHeaderView.identifier)
+
+        collectionView.register(ForecastCollectionViewCell.self, forCellWithReuseIdentifier: "ForecastCollectionViewCell")
     }
 }
 
@@ -80,7 +82,7 @@ extension WeatherForecastViewController {
 
 extension WeatherForecastViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return 10
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -93,6 +95,22 @@ extension WeatherForecastViewController: UICollectionViewDelegate, UICollectionV
 
 extension WeatherForecastViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 120, height: 120)
+        let screenWidth = UIScreen.main.bounds.width
+        return CGSize(width: screenWidth, height: 120)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: WeaterHeaderView.identifier, for: indexPath)
+            return header
+        default:
+            return UICollectionReusableView()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let screenWidth = UIScreen.main.bounds.width
+        return CGSize(width: screenWidth, height: 80)
     }
 }
