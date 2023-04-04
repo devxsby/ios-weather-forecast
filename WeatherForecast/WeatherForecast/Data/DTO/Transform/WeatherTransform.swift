@@ -8,20 +8,19 @@
 import Foundation
 
 extension WeatherResponseDTO {
-    
     func toDomain() -> WeatherEntity {
         return .init(weather: weather.map { $0.toDomain() }, main: main?.toDomain())
     }
 }
 
-extension WeatherResponseDTO.WeatherElement {
-    func toDomain() -> WeatherElementEntity {
+extension WeatherInformationDTO {
+    func toDomain() -> WeatherInformationEntity {
         return .init(id: id, main: main, description: description, icon: icon)
     }
 }
 
-extension WeatherResponseDTO.Main {
-    func toDomain() -> MainWeatherEntity {
+extension TemperatureInformationDTO {
+    func toDomain() -> TempEntity {
         return .init(temp: temp)
     }
 }

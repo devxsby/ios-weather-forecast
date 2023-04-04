@@ -11,15 +11,15 @@ import CoreLocation
 
 // MARK: - Protocols
 
-protocol LocationUpdateProtocol: AnyObject {
-    func locationDidUpdateToLocation(location: CLLocation)
+protocol LocationUpdateDelegate: AnyObject {
+    func locationDidUpdateToLocation(location: Location)
 }
 
 final class CoreLocationManager: NSObject {
         
     private let locationManager = CLLocationManager()
     
-    weak var delegate: LocationUpdateProtocol?
+    weak var delegate: LocationUpdateDelegate?
     
     override init() {
         super.init()
@@ -43,7 +43,8 @@ extension CoreLocationManager {
 extension CoreLocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let currentLocation = locations.last else { return }
-        delegate?.locationDidUpdateToLocation(location: currentLocation)
+        let location = Location(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+        delegate?.locationDidUpdateToLocation(location: location)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

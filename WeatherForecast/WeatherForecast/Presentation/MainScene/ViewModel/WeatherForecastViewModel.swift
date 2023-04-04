@@ -6,15 +6,14 @@
 //
 
 import Foundation
-import CoreLocation
 
 final class WeatherForecastViewModel {
     
     private let usecase: WeatherForecastUseCase
     private let coreLocationManager = CoreLocationManager()
     
-    var loadWeatherEntity: ((WeatherEntity) -> Void)!
-    var loadForecastEntity: ((ForecastEntity) -> Void)!
+    var loadWeatherEntity: ((WeatherEntity) -> Void)?
+    var loadForecastEntity: ((ForecastEntity) -> Void)?
     
     init(usecase: WeatherForecastUseCase) {
         self.usecase = usecase
@@ -30,24 +29,24 @@ extension WeatherForecastViewModel {
     
     func requestWeatherData(lat: Double, lon: Double) {
         usecase.fetchWeather(lat: lat, lon: lon) { [weak self] weatherEntity in
-            self?.loadWeatherEntity(weatherEntity)
+            self?.loadWeatherEntity?(weatherEntity)
         }
     }
     
     func requestFetchData(lat: Double, lon: Double) {
         usecase.fetchForecast(lat: lat, lon: lon) { [weak self] forecastEntity in
-            self?.loadForecastEntity(forecastEntity)
+            self?.loadForecastEntity?(forecastEntity)
         }
     }
 }
 
-// MARK: - LocationUpdateProtocol Implementation
+// MARK: - LocationUpdateDelegate Implementation
 
-extension WeatherForecastViewModel: LocationUpdateProtocol {
+extension WeatherForecastViewModel: LocationUpdateDelegate {
     
-    func locationDidUpdateToLocation(location: CLLocation) {
-        let lat = location.coordinate.latitude
-        let lon = location.coordinate.longitude
+    func locationDidUpdateToLocation(location: Location) {
+        let lat = location.latitude
+        let lon = location.longitude
         self.requestWeatherData(lat: lat, lon: lon)
         self.requestFetchData(lat: lat, lon: lon)
     }

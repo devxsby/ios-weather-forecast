@@ -8,25 +8,6 @@
 import Foundation
 
 struct ForecastEntity {
-    let list: [ListEntity]
+    let list: [ForecastListEntity]
     let city: CityEntity
-}
-
-struct CityEntity {
-    let name, country: String
-}
-
-struct ListEntity {
-    let dtTxt: String
-    let main: MainForecastEntity
-    let weather: [FiveDaysWeatherElementEntity]
-}
-
-struct MainForecastEntity: Decodable {
-    let temp: Double?
-}
-
-struct FiveDaysWeatherElementEntity: Decodable {
-    let id: Int?
-    let main, description, icon: String?
 }
