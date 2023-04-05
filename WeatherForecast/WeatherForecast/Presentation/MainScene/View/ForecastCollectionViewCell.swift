@@ -26,7 +26,7 @@ final class ForecastCollectionViewCell: UICollectionViewCell {
     let temperatureImageView: UIImageView = {
         let tempImage = UIImageView()
         tempImage.image = UIImage(imageLiteralResourceName: "sun")
-        tempImage.contentMode = .scaleAspectFit
+        tempImage.contentMode = .scaleToFill
         return tempImage
     }()
     

@@ -73,7 +73,7 @@ extension WeatherForecastViewController {
     }
 
     private func registerCollectionViewCell() {
-        collectionView.register(WeaterHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeaterHeaderView.identifier)
+        collectionView.register(WeatherHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeatherHeaderView.identifier)
 
         collectionView.register(ForecastCollectionViewCell.self, forCellWithReuseIdentifier: "ForecastCollectionViewCell")
     }
@@ -107,13 +107,13 @@ extension WeatherForecastViewController: UICollectionViewDelegate, UICollectionV
 extension WeatherForecastViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
-        return CGSize(width: screenWidth, height: 120)
+        return CGSize(width: screenWidth, height: 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: WeaterHeaderView.identifier, for: indexPath)
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: WeatherHeaderView.identifier, for: indexPath)
             return header
         default:
             return UICollectionReusableView()
@@ -122,6 +122,6 @@ extension WeatherForecastViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
-        return CGSize(width: screenWidth, height: 80)
+        return CGSize(width: screenWidth, height: 130)
     }
 }
