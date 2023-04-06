@@ -74,9 +74,10 @@ extension NetworkServiceProtocol {
         let latQuery = URLQueryItem(name: "lat", value: lat)
         let lonQuery = URLQueryItem(name: "lon", value: lon)
         let appIdQuery = URLQueryItem(name: "appid", value: SecretKey.appId)
+        let unitsQuery = URLQueryItem(name: "units", value: "metric")
         let langQuery = URLQueryItem(name: "lang", value: "kr")
         
-        urlComponents?.queryItems = [latQuery, lonQuery, appIdQuery, langQuery]
+        urlComponents?.queryItems = [latQuery, lonQuery, appIdQuery, unitsQuery, langQuery]
         
         return urlComponents?.url
     }
