@@ -55,8 +55,9 @@ extension CoreLocationManager: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         guard let currentLocation = locations.last else { return }
+        
+        locationManager.stopUpdatingLocation()
         
         let location = Location(latitude: currentLocation.coordinate.latitude,
                                 longitude: currentLocation.coordinate.longitude)
