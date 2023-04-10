@@ -43,6 +43,8 @@ final class WeatherForecastViewController: UIViewController {
         registerCollectionViewCell()
         configureCollectionView()
         binding()
+        viewModel.requestWeatherData()
+        viewModel.requestForecastData()
     }
 }
 
@@ -55,19 +57,31 @@ extension WeatherForecastViewController {
     }
     
     private func binding() {
-
-        viewModel.loadWeatherEntity = { [weak self] weatherEntity in
+        
+        viewModel.loadWeatherEntity = { [weak self] result in
+            switch result {
+            case .success(let weatherEntity):
+                // ui 업데이트
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }
             print(weatherEntity)
+            case .failure(let error):
+                print("Error fetching weather data: \(error.localizedDescription)")
+            }
         }
-
-        viewModel.loadForecastEntity = { [weak self] forecastEnitity in
+        
+        viewModel.loadForecastEntity = { [weak self] result in
+            switch result {
+            case .success(let forecastEnitity):
+                // ui 업데이트
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }
             print(forecastEnitity)
+            case .failure(let error):
+                print("Error fetching forecast data: \(error.localizedDescription)")
+            }
         }
     }
 

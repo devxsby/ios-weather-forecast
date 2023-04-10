@@ -12,40 +12,36 @@ import CoreLocation
 final class WeatherForecastViewModel {
     
     private let usecase: WeatherForecastUseCase
-    private let coreLocationManager = CoreLocationManager()
-
+    
     var weatherInfo: WeatherEntity?
     var forecastInfo = [ForecastListEntity]()
-
-//    var mainLocation: String {
-//        getLocationString { location in
-//
-//        }
-//    }
-
+    
+    var loadWeatherEntity: ((Result<WeatherEntity, Error>) -> Void)?
+    var loadForecastEntity: ((Result<ForecastEntity, Error>) -> Void)?
+    
     var temperature: String {
         let tempMin = formatter(temp: weatherInfo?.tempMin ?? 0.0)
         let tempMax = formatter(temp: weatherInfo?.tempMax ?? 0.0)
         return "최저 \(tempMin) 최고 \(tempMax)"
     }
-
+    
     var currentTemperature: String {
         let mainTemp = formatter(temp: weatherInfo?.main?.temp ?? 0.0)
         return mainTemp
     }
     
-    var loadWeatherEntity: ((WeatherEntity) -> Void)?
-    var loadForecastEntity: ((ForecastEntity) -> Void)?
-    
     init(usecase: WeatherForecastUseCase) {
         self.usecase = usecase
-        self.updateCurrentLocation()
+    }
+}
+
+extension WeatherForecastViewModel {
+    
+    func formatter(temp: Double) -> String {
+        let str = String(format: "%.1f", temp)
+        return str + "°"
     }
     
-    private func updateCurrentLocation() {
-        coreLocationManager.delegate = self
-    }
-
     func formatterDate(date: String) -> String {
         let dateStr = date
 
@@ -61,11 +57,7 @@ final class WeatherForecastViewModel {
         return convertStr
     }
 
-    func formatter(temp: Double) -> String {
-        let str = String(format: "%.1f", temp)
-        return str + "°"
-    }
-
+    // location manger로 옮기기
     func getLocationString(completion: @escaping (String) -> Void) {
         let location = CLLocation(latitude: weatherInfo?.location?.latitude ?? 0.0, longitude: weatherInfo?.location?.longitude ?? 0.0)
         let geocoder = CLGeocoder()
@@ -85,29 +77,21 @@ final class WeatherForecastViewModel {
 
 extension WeatherForecastViewModel {
     
-    func requestWeatherData(lat: Double, lon: Double) {
-        usecase.fetchWeather(lat: lat, lon: lon) { [weak self] weatherEntity in
-            self?.weatherInfo = weatherEntity
-            self?.loadWeatherEntity?(weatherEntity)
+    func requestWeatherData() {
+        usecase.getWeather { [weak self] result in
+            self?.loadWeatherEntity?(result.map { weatherEntity in
+                self?.weatherInfo = weatherEntity
+                return weatherEntity
+            })
         }
     }
     
-    func requestFetchData(lat: Double, lon: Double) {
-        usecase.fetchForecast(lat: lat, lon: lon) { [weak self] forecastEntity in
-            self?.forecastInfo = forecastEntity.list
-            self?.loadForecastEntity?(forecastEntity)
+    func requestForecastData() {
+        usecase.getForecast { [weak self] result in
+            self?.loadForecastEntity?(result.map { forecastEntity in
+                self?.forecastInfo = forecastEntity.list
+                return forecastEntity
+            })
         }
-    }
-}
-
-// MARK: - LocationUpdateDelegate Implementation
-
-extension WeatherForecastViewModel: LocationUpdateDelegate {
-    
-    func locationDidUpdateToLocation(location: Location) {
-        let lat = location.latitude
-        let lon = location.longitude
-        self.requestWeatherData(lat: lat, lon: lon)
-        self.requestFetchData(lat: lat, lon: lon)
     }
 }
