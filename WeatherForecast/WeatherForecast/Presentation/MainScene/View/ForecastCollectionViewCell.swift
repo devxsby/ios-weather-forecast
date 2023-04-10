@@ -29,12 +29,12 @@ final class ForecastCollectionViewCell: UICollectionViewCell {
         tempImage.contentMode = .scaleToFill
         return tempImage
     }()
-    
-    //    private let label: UILabel = {
-    //        let label = UILabel()
-    //        label.text = "안녕하세요"
-    //        return label
-    //    }()
+
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray
+        return view
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,7 +47,7 @@ final class ForecastCollectionViewCell: UICollectionViewCell {
     }
     
     private func setUI() {
-        self.backgroundColor = .systemPink
+        self.backgroundColor = .white
     }
     
     private func setLayout() {
@@ -60,12 +60,22 @@ final class ForecastCollectionViewCell: UICollectionViewCell {
         temperatureImageView.translatesAutoresizingMaskIntoConstraints = false
         temperatureImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         temperatureImageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
-        temperatureImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        temperatureImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        temperatureImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        temperatureImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
         contentView.addSubview(temperatureLabel)
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         temperatureLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         temperatureLabel.trailingAnchor.constraint(equalTo: temperatureImageView.leadingAnchor, constant: -5).isActive = true
+
+        contentView.addSubview(lineView)
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        lineView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
+        lineView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
+        lineView.bottomAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 5).isActive = true
+    }
+
+    func setData(model: WeatherForecastViewModel) {
     }
 }

@@ -27,10 +27,10 @@ final class WeatherForecastViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = .zero
-        layout.minimumLineSpacing = 10
+        layout.minimumLineSpacing = 1
 
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .blue
+        cv.backgroundColor = .white
         return cv
     }()
     
@@ -57,12 +57,16 @@ extension WeatherForecastViewController {
     private func binding() {
 
         viewModel.loadWeatherEntity = { [weak self] weatherEntity in
-            // ui 업데이트
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
             print(weatherEntity)
         }
 
         viewModel.loadForecastEntity = { [weak self] forecastEnitity in
-            // ui 업데이트
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
             print(forecastEnitity)
         }
     }
@@ -93,12 +97,18 @@ extension WeatherForecastViewController {
 
 extension WeatherForecastViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return viewModel.forecastInfo.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ForecastCollectionViewCell.identifier, for: indexPath)
                 as? ForecastCollectionViewCell else { return UICollectionViewCell() }
+//        cell.setData(model: viewModel)
+
+        let forecast = viewModel.forecastInfo[indexPath.row]
+
+        cell.timeLabel.text = viewModel.formatterDate(date: forecast.dtTxt)
+        cell.temperatureLabel.text = viewModel.formatter(temp: forecast.main.temp!)
         return cell
     }
 
@@ -107,13 +117,20 @@ extension WeatherForecastViewController: UICollectionViewDelegate, UICollectionV
 extension WeatherForecastViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
-        return CGSize(width: screenWidth, height: 50)
+        return CGSize(width: screenWidth, height: 30)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: WeatherHeaderView.identifier, for: indexPath)
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: WeatherHeaderView.identifier, for: indexPath) as! WeatherHeaderView
+            header.currentTemperatureLabel.text = viewModel.currentTemperature
+            header.temperatureLabel.text = viewModel.temperature
+            viewModel.getLocationString { location in
+                DispatchQueue.main.async {
+                    header.locationLabel.text = location
+                }
+            }
             return header
         default:
             return UICollectionReusableView()

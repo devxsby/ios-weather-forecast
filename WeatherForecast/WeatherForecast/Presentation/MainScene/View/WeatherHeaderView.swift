@@ -26,13 +26,13 @@ final class WeatherHeaderView: UICollectionReusableView {
 
     let temperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "최저 1.0 최고 11.0"
+        label.text = ""
         return label
     }()
 
     let currentTemperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "11.0"
+        label.text = ""
         label.font = label.font.withSize(20)
         return label
     }()
@@ -65,7 +65,7 @@ final class WeatherHeaderView: UICollectionReusableView {
     }
 
     private func setUI() {
-        self.backgroundColor = .yellow
+        self.backgroundColor = .white
     }
 
     private func setLayout() {

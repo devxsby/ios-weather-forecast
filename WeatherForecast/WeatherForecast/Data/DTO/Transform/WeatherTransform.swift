@@ -9,7 +9,12 @@ import Foundation
 
 extension WeatherResponseDTO {
     func toDomain() -> WeatherEntity {
-        return .init(weather: weather.map { $0.toDomain() }, main: main?.toDomain())
+        let tempMin = main?.tempMin
+        let tempMax = main?.tempMax
+        let lat = coord?.lat
+        let lon = coord?.lon
+
+        return .init(weather: weather.map { $0.toDomain() }, main: main?.toDomain(), location: Location(latitude: lat!, longitude: lon!), tempMin: tempMin, tempMax: tempMax)
     }
 }
 

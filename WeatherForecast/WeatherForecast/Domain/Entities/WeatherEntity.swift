@@ -10,4 +10,6 @@ import Foundation
 struct WeatherEntity {
     let weather: [WeatherInformationEntity]
     let main: TempEntity?
+    let location: Location?
+    let tempMin, tempMax: Double?
 }
