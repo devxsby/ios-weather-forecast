@@ -54,12 +54,12 @@ final class ForecastCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(timeLabel)
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        timeLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
+        timeLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
 
         contentView.addSubview(temperatureImageView)
         temperatureImageView.translatesAutoresizingMaskIntoConstraints = false
         temperatureImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        temperatureImageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
+        temperatureImageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         temperatureImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
         temperatureImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
@@ -71,8 +71,8 @@ final class ForecastCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(lineView)
         lineView.translatesAutoresizingMaskIntoConstraints = false
         lineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        lineView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
-        lineView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
+        lineView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        lineView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         lineView.bottomAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 5).isActive = true
     }
 

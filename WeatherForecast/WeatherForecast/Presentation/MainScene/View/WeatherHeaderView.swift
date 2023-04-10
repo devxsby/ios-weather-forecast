@@ -80,7 +80,7 @@ final class WeatherHeaderView: UICollectionReusableView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: temperatureImageView.trailingAnchor, constant: 10).isActive = true
-        stackView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
         stackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
     }
 }
